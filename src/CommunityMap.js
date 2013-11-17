@@ -1,10 +1,9 @@
 window.community_map = {};
-
-  
     
 (function($, window, undefined) {
     
     $.widget('custom.community_map', {
+        
         _create: function () {
             //containers for data from the JSON 
             this.options.types          = [];
@@ -23,7 +22,7 @@ window.community_map = {};
             this.options.postcode_search= this.element.attr('data-map-postcode-search'),
             this.options.searchType     = this.element.attr('data-map-search-type'),
             this.options.elem           = this.element;
-
+            
             community_map.drawMap(this.options);
         }
     });

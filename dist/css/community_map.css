@@ -1,17 +1,14 @@
 
-
 /* structure */
 .outside_container { 
-    width:100%;
+    width:700px;
     height:500px;
-    margin-bottom:40px;
+    margin-bottom:100px;
 }   
-
-
 
 .controls_container { 
     float:left;
-    width:220px;
+    width:250px;
     background-color:white;
     height:100%;
 }
@@ -19,6 +16,7 @@
 .display_container { 
     height:100%;
     float:left;
+    width:450px;
 }
 
 .leaflet_container  { 

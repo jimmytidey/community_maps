@@ -75,17 +75,17 @@ community_map.changeViewEvents = function () {
 };
 
 
-community_map.renderDropDown = function (options) {
+community_map.renderDropDown = function(options) {
 
     var maps_object = options;
 
     //add the selector HTML 
     //TODO add proper id connection between dropdown and label 
-    var html = '<label class="drop_down_label">Search by waste item</label><select   class="type_selector"></selector>';
-    jQuery('.controls_container', this.elem).append(html);
+    var html = '<label class="drop_down_label">Search by waste item</label><select class="type_selector"></selector>';
+    jQuery('.controls_container', maps_object.elem).append(html);
 
     jQuery.each(maps_object.types, function (key, value) {
-        jQuery('.type_selector', this.elem).append("<option value='" + key + "'>" + value.name + "</option>");
+        jQuery('.type_selector', maps_object.elem).append("<option value='" + key + "'>" + value.name + "</option>");
     });
 
     //ensure there are no events stuck on this element

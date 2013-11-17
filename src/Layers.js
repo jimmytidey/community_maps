@@ -6,15 +6,15 @@ community_map.addListItem = function (feature, options) {
 }
 
 community_map.addLayer = function (type_id, options) {
-    console.log('adding layer');
+    
     var maps_object = options;
 
     //test to ensure this layer isn't already added 
     if (!maps_object.point_layers[type_id]) {
-         console.log('layer is not already added');
+         
         maps_object.point_layers[type_id] = L.geoJson(maps_object.data, {
             onEachFeature: function (feature, layer) { //layer here refering to leaflets internal concept of layer        
-                console.log(feature);
+                
                 if(layer.setIcon && maps_object.types[feature.properties.type_id].icon) {
                     var icon = layer.setIcon(maps_object.types[feature.properties.type_id].icon);
                     layer.options.title = feature.properties.name.replace(/(<([^>]+)>)/ig, "");
@@ -44,8 +44,8 @@ community_map.addLayer = function (type_id, options) {
 
 
 community_map.addAllLayers = function (options) {
-    for(var i=0; i<this.types.length; i++) { 
-        this.addLayer(i, options); 
+    for(var i=0; i<options.types.length; i++) { 
+        options.addLayer(i, options); 
     }
 };
 
@@ -89,15 +89,15 @@ community_map.removeLayer = function (type_id, options) {
 
 community_map.removeAllLayers = function (options) {
 
-    var maps_object = this;
+    var maps_object = options;
 
     jQuery.each(this.point_layers, function (key, val) {
         if(typeof val !== 'undefined') {
-            maps_object.map.removeLayer(val, options);
+            maps_object.map.removeLayer(val, maps_object);
         }
     });
 
-    jQuery('.list_container', options.elem).empty();
+    jQuery('.list_container', maps_object.elem).empty();
 };
 
 
