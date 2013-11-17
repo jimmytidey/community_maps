@@ -1,0 +1,14 @@
+name = Lambeth Interactive Map
+description = Provides content type and wrapper for JS interactive map
+Package = Lambeth
+core = 7.x
+files[]     = lambeth_interactive_map.module
+
+scripts[]   = js/leaflet.js
+scripts[]   = js/lambeth_map_object.js
+scripts[]   = js/lambeth_map_json.js
+scripts[]   = js/lambeth_map_layers.js
+scripts[]   = js/lambeth_map_ui.js
+scripts[]   = js/lambeth_map_postcode_lookup.js
+scripts[]   = js/lambeth_map_init.js
+

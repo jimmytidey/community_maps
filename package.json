@@ -11,7 +11,6 @@
     "karma": "~0.10.4",
     "karma-mocha": "~0.1.0"
   },
-  "main": "src/leaflet-src.js",
   "scripts": {
     "test": "jake test",
     "prepublish": "jake build"

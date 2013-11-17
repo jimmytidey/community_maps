@@ -1,38 +1,34 @@
 window.community_map = {};
 
-jQuery(document).ready(function(){    
+  
     
-    (function($, window, undefined) {
-        
-        $.widget('custom.community_map', {
-            _create: function () {
-                //containers for data from the JSON 
-                this.options.types          = [];
-                this.options.icons          = [];
-                this.options.point_layers   = [];
-
-                //settings for the widget -- these will be over-ridden if the user passes in options
-                this.options.outline_url    = this.element.attr('data-map-outline-url'),
-                this.options.url            = this.element.attr('data-map-url'), //URL for geoJSON
-                this.options.fixed_layer_url= this.element.attr('data-map-fixed-layer-url'),
-                this.options.filterField    = this.element.attr('data-map-filter-on'), // Field used for dropdown/lookup
-                this.options.zoom           = parseInt(this.element.attr('data-map-zoom')), //Map Zoom
-                this.options.centre         = this.element.attr('data-map-centre').split(','), //Map Centre
-                this.options.lat            = parseFloat(this.options.centre[0]),
-                this.options.lng            = parseFloat(this.options.centre[1]),
-                this.options.postcode_search= this.element.attr('data-map-postcode-search'),
-                this.options.searchType     = this.element.attr('data-map-search-type'),
-                this.options.elem           = this.element;
-
-                community_map.drawMap(this.options);
-            }
-        });
-        
-    }(jQuery,window));
-         
-    jQuery('.lambeth_map').community_map();
+(function($, window, undefined) {
     
-});
+    $.widget('custom.community_map', {
+        _create: function () {
+            //containers for data from the JSON 
+            this.options.types          = [];
+            this.options.icons          = [];
+            this.options.point_layers   = [];
+
+            //settings for the widget -- these will be over-ridden if the user passes in options
+            this.options.outline_url    = this.element.attr('data-map-outline-url'),
+            this.options.url            = this.element.attr('data-map-url'), //URL for geoJSON
+            this.options.fixed_layer_url= this.element.attr('data-map-fixed-layer-url'),
+            this.options.filterField    = this.element.attr('data-map-filter-on'), // Field used for dropdown/lookup
+            this.options.zoom           = parseInt(this.element.attr('data-map-zoom')), //Map Zoom
+            this.options.centre         = this.element.attr('data-map-centre').split(','), //Map Centre
+            this.options.lat            = parseFloat(this.options.centre[0]),
+            this.options.lng            = parseFloat(this.options.centre[1]),
+            this.options.postcode_search= this.element.attr('data-map-postcode-search'),
+            this.options.searchType     = this.element.attr('data-map-search-type'),
+            this.options.elem           = this.element;
+
+            community_map.drawMap(this.options);
+        }
+    });
+    
+}(jQuery,window));
 
 
 

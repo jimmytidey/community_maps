@@ -82,9 +82,11 @@ exports.build = function (compsBase32, buildName) {
 	    intro = '(function (window, document, undefined) {',
 	    outro = '}(window, document));',
 	    newSrc = copy + intro + combineFiles(files) + outro,
+	    
+	    //not sure how the buildname business works 
 
-	    pathPart = 'dist/leaflet' + (buildName ? '-' + buildName : ''),
-	    srcPath = pathPart + '-src.js',
+	    pathPart = 'dist/community-map-min',
+	    srcPath = pathPart + '.js',
 
 	    oldSrc = loadSilently(srcPath),
 	    srcDelta = getSizeDelta(newSrc, oldSrc);
