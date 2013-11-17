@@ -1,6 +1,0 @@
-<map data-zoom='0-17' data-has-text-list='boolean' data-center='lat,lng'  data-search-type='dropdown/autocomplete/key' data-postcode-lookup='boolean' >
-    <layer data-type='geojson-polygon' data-style='string' data-url='url'  />
-    <layer data-type='geojson-points' data-is-fixed='boolean' data-type-specifier='string' OR  data-type=''  data-icon-specifier='' OR data-icon-url='' data-title-specifier OR data-title=''  />    
-      
-</map>
-    
