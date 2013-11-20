@@ -13,7 +13,7 @@
     <style>
         .lambeth_map {width:800px;}
         .container { 
-            width:1000px;
+            width:1100px;
             position:relative;
             margin: 30px auto;
         }
@@ -24,10 +24,15 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-    <script src='community-map-min.js' ></script>
+    
+    <script src='../src/CommunityMap.js' ></script>
+    <script src='../src/JSON.js' ></script>
+    <script src='../src/Layers.js' ></script>    
+    <script src='../src/PostcodeLookup.js' ></script>  
+    <script src='../src/UI.js' ></script>      
     
     <script> 
-        jQuery(document).ready(function(){           
+        jQuery(document).ready(function(){
             jQuery('.lambeth_map').community_map();
         });
     </script>
@@ -55,6 +60,7 @@
 
         <h2 >Libraries</h2>    
         <div class="lambeth_map" data-map-url="http://www.lambeth.coop/libraries-places-geojson"  data-map-zoom="12" data-map-centre="51.459677 , -0.123429" data-map-width="1000" data-map-outline-url="/sites/default/files/lambeth.json"  data-map-height="400" data-map-search-type="key" data-map-postcode-search="true" data-map-filter-on="field_place_place_taxonomy_rendered" data-map-fixed-layer-url=""></div>
+
     </div>
     
 </body>

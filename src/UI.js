@@ -25,7 +25,7 @@ community_map.drawMap = function (options) {
         html += '<div class="leaflet_container"></div>';
     jQuery(".display_container", options.elem).append(html);
 
-    community_map.changeViewEvents();
+    community_map.changeViewEvents(options);
 
     //Render postcode search if necessary 
     if(options.postcode_search === 'true') {
@@ -56,21 +56,29 @@ community_map.drawMap = function (options) {
 };
 
 
-community_map.changeViewEvents = function () {
-    jQuery('.map_view_tab', this.elem).click(function () {
-        jQuery('.leaflet_container', this.elem).show();
-        jQuery('.map_view_tab', this.elem).addClass('selected_tab');
+community_map.changeViewEvents = function (options) {
+    
+     var maps_object = options;
+    
+    jQuery('.map_view_tab', options.elem).click(function () {
+        jQuery('.leaflet_container', options.elem).show();
+        jQuery('.map_view_tab', options.elem).addClass('selected_tab');
                 
-        jQuery('.list_container', this.elem).hide();
-        jQuery('.list_view_tab', this.elem).removeClass('selected_tab');
+        jQuery('.list_container', options.elem).hide();
+        jQuery('.list_view_tab', options.elem).removeClass('selected_tab');
     });
 
-    jQuery('.list_view_tab', this.elem).click(function () {
-        jQuery('.list_container', this.elem).show();
-        jQuery('.list_view_tab', this.elem).addClass('selected_tab');
+    jQuery('.list_view_tab', options.elem).click(function () {
         
-        jQuery('.leaflet_container', this.elem).hide();
-        jQuery('.map_view_tab', this.elem).removeClass('selected_tab');
+        if(jQuery('.list_container', maps_object.elem).text() === "") { 
+            community_map.addAllListItems(maps_object);
+        }
+        
+        jQuery('.list_container', options.elem).show();
+        jQuery('.list_view_tab', options.elem).addClass('selected_tab');
+        
+        jQuery('.leaflet_container', options.elem).hide();
+        jQuery('.map_view_tab', options.elem).removeClass('selected_tab');
     });
 };
 
@@ -133,7 +141,6 @@ community_map.renderKey = function (options) {
         var html = "<div class='key_item individual_layer' >";
             html += "<img src='" + img_url + "' /><label for='checkbox_" + value.name + "'>" + value.name + " (" + value.count  + ")</label><input  id='checkbox_" + value.name + "' type='checkbox' value='" + key + "' />";
             html += "<div class='key_divider clearfix'></div></div>";
-
         jQuery('.key', maps_object.elem).append(html);
     });
     
@@ -169,17 +176,17 @@ community_map.renderKey = function (options) {
         }
     });
     
-    jQuery('.all_values input', this.elem).unbind();
+    jQuery('.all_values input', maps_object.elem).unbind();
     
-    jQuery('.all_values input', this.elem).change(function() {
+    jQuery('.all_values input', maps_object.elem).change(function() {
         
         //remove all checkboxes on the other inputs 
         jQuery('.individual_layer input', maps_object.elem).removeAttr('checked');
         
         if(jQuery(this).is(':checked')) {
-            community_map.addAllLayers(options, maps_object);
+            community_map.addAllLayers(maps_object);
         } else {
-            community_map.removeAllLayers(options, maps_object);
+            community_map.removeAllLayers(maps_object);
         }
     });
 }

@@ -1,7 +1,7 @@
 
 /* structure */
 .outside_container { 
-    width:700px;
+    width:1000px;
     height:500px;
     margin-bottom:100px;
 }   
@@ -16,7 +16,7 @@
 .display_container { 
     height:100%;
     float:left;
-    width:450px;
+    width:650px;
 }
 
 .leaflet_container  { 
@@ -31,9 +31,6 @@
     width:100%;
     padding-top:10px;
 }
-
-
-
 
 /* tabs */
 .view_tabs a{ 
@@ -198,19 +195,40 @@
 /* List items */
 .list_item { 
     border-bottom:1px solid black;
+    padding-top:10px;
 }
 
 .list_item h2 { 
     border-bottom:none;
+    margin-top:0px;
 }
 
+.list_item .list_view_icon { 
+    margin-top:2px;
+    float:left;
+    width:10%;
+    display:block;
+}
+
+.list_item .list_left_column { 
+    width:50%;
+    float:left;
+}
+
+.list_item .list_right_column { 
+    width:40%;
+    float:left;
+}
+
+
+/* map pins */
 .list_item .map-pin-left-column { 
     width:50%;
     float:left;
 }
 
 .list_item .map-pin-right-column { 
-    width:50%;
+    width:40%;
     float:left;
 }
 

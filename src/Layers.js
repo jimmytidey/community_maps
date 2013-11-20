@@ -1,7 +1,19 @@
 
 
 community_map.addListItem = function (feature, options) {
-    var html = "<div class='list_item type_" + feature.properties.type_id + "'><div class='list_left_column'><h2>" + feature.properties.name + "</h2><p class='list_item_description'>" + feature.properties.description + "</p></div><div class='list_right_column'></div> <br class='clearfix'/></div >";
+    
+    console.log('feature in add list item: ', feature);
+      
+    var html = "<div class='list_item type_" + feature.properties.type_id + "'>";
+        html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
+        if (feature.properties.nothing_rendered) {
+            html += feature.properties.nothing_rendered;
+        } else {
+            html += feature.properties.name; 
+        }
+        
+    html+= "<br class='clearfix'/></div >";  
+    
     jQuery('.list_container', options.elem).append(html);
 }
 
@@ -45,7 +57,15 @@ community_map.addLayer = function (type_id, options) {
 
 community_map.addAllLayers = function (options) {
     for(var i=0; i<options.types.length; i++) { 
-        options.addLayer(i, options); 
+        community_map.addListItem(i, options); 
+    }
+};
+
+
+community_map.addAllListItems = function (options) {
+    console.log("stuff passed in to add all list items ",  options);
+    for(var i=0; i<options.types.length; i++) { 
+        community_map.addListItem(options.data.features[i], options); 
     }
 };
 
@@ -71,6 +91,8 @@ community_map.addFixedLayer = function (data, options) {
                 leaflet_layer.options.alt = feature.properties.name.replace(/(<([^>]+)>)/ig, "");
             }
             
+            community_map.addListItem(feature, maps_object);
+            
             leaflet_layer.bindPopup(feature.properties.name);
         }
     }).addTo(maps_object.map);
@@ -78,6 +100,8 @@ community_map.addFixedLayer = function (data, options) {
     var img_url = maps_object.fixed_layer_data.features[0].properties.uri_rendered;
     
     var html = "<div class='key_item' ><img src='" + img_url + "' /><p>" + maps_object.fixed_layer_data.features[0].properties.name.replace(/(<([^>]+)>)/ig, "") + "</p></div>";
+   
+   
    
     jQuery('.fixed_layer_key', maps_object.elem).append(html);
 };
@@ -88,14 +112,15 @@ community_map.removeLayer = function (type_id, options) {
 };
 
 community_map.removeAllLayers = function (options) {
-
+    
     var maps_object = options;
-
-    jQuery.each(this.point_layers, function (key, val) {
-        if(typeof val !== 'undefined') {
-            maps_object.map.removeLayer(val, maps_object);
+    
+    for(var i=0; i<maps_object.types.length; i++) { 
+        if(maps_object.types[i] !== 'undefined') {
+             
+            community_map.removeLayer(i, maps_object);
         }
-    });
+    };
 
     jQuery('.list_container', maps_object.elem).empty();
 };
