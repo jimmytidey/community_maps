@@ -1,9 +1,7 @@
 
 
 community_map.addListItem = function (feature, options) {
-    
-    console.log('feature in add list item: ', feature);
-      
+     
     var html = "<div class='list_item type_" + feature.properties.type_id + "'>";
         html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
         if (feature.properties.nothing_rendered) {
@@ -56,15 +54,17 @@ community_map.addLayer = function (type_id, options) {
 
 
 community_map.addAllLayers = function (options) {
+
     for(var i=0; i<options.types.length; i++) { 
-        community_map.addListItem(i, options); 
+       community_map.addLayer(i,options);
     }
 };
 
 
+//This is only required for the state where we want to add all the list items to the text views
+//because otherwise it will be empty
 community_map.addAllListItems = function (options) {
-    console.log("stuff passed in to add all list items ",  options);
-    for(var i=0; i<options.types.length; i++) { 
+    for(var i=0; i<options.data.features.length; i++) { 
         community_map.addListItem(options.data.features[i], options); 
     }
 };
@@ -108,7 +108,8 @@ community_map.addFixedLayer = function (data, options) {
 
 community_map.removeLayer = function (type_id, options) {
     options.map.removeLayer(options.point_layers[type_id]);
-    options.point_layers[type_id] = null; 
+    options.point_layers[type_id] = null;
+    jQuery('.list_container .type_'+type_id, options.elem).remove();
 };
 
 community_map.removeAllLayers = function (options) {
@@ -127,17 +128,21 @@ community_map.removeAllLayers = function (options) {
 
 
 
-community_map.hereIAmMarker = function (lat, lon) {
-    if(this.hereMarker) {
-        this.map.removeLayer(this.hereMarker);
-    } //remove icon if it's in the wrong place
+community_map.hereIAmMarker = function (lat, lon, options) {
+    
+    var maps_object = options;
+    
+    if(maps_object.hereMarker) { //remove icon if it's in the wrong place
+        maps_object.map.removeLayer(maps_object.hereMarker);
+    } 
+    
     var hereIcon = new L.icon({
         iconUrl: '/sites/all/modules/custom/lambeth_interactive_map/img/here_i_am.png'
     });
     
-    this.hereMarker = L.marker([lat, lon], {
+    maps_object.hereMarker = L.marker([lat, lon], {
         icon: hereIcon
-    }).addTo(this.map);
+    }).addTo(maps_object.map);
 };
 
 community_map.renderOutline = function () {

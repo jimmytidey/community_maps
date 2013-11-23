@@ -40,7 +40,7 @@ community_map.postcodeLookup = function (postcode, options) {
         } else {
             jQuery('.warning', maps_object.elem).remove();
             maps_object.map.setView([data[0].lat, data[0].lon], 15);
-            maps_object.hereIAmMarker(data[0].lat, data[0].lon);
+            community_map.hereIAmMarker(data[0].lat, data[0].lon, maps_object);
         }
     });
 };

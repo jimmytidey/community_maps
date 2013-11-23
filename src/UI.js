@@ -70,8 +70,9 @@ community_map.changeViewEvents = function (options) {
 
     jQuery('.list_view_tab', options.elem).click(function () {
         
-        if(jQuery('.list_container', maps_object.elem).text() === "") { 
+        if(jQuery('.list_container', maps_object.elem).text() == "") { 
             community_map.addAllListItems(maps_object);
+            maps_object.nothing_selected_condition = true; 
         }
         
         jQuery('.list_container', options.elem).show();
@@ -164,6 +165,12 @@ community_map.renderKey = function (options) {
     
     jQuery('.individual_layer input', maps_object.elem).change(function () {
         
+        //Get out of the state where everything is visible in the text view because nothing has been selected 
+        if (maps_object.nothing_selected_condition) { 
+            jQuery('.list_container', maps_object.elem).empty();
+            maps_object.nothing_selected_condition = false;
+        }
+        
         //remove 'all layers' checkbox if it's selected  
         jQuery('.all_values input', maps_object.elem).removeAttr('checked');
         
@@ -179,6 +186,12 @@ community_map.renderKey = function (options) {
     jQuery('.all_values input', maps_object.elem).unbind();
     
     jQuery('.all_values input', maps_object.elem).change(function() {
+        
+        //Get out of the state where everything is visible in the text view because nothing has been selected 
+        if (maps_object.nothing_selected_condition) { 
+            jQuery('.list_container', maps_object.elem).empty();
+            maps_object.nothing_selected_condition = false;
+        }
         
         //remove all checkboxes on the other inputs 
         jQuery('.individual_layer input', maps_object.elem).removeAttr('checked');
@@ -204,11 +217,12 @@ community_map.renderPostcodeLookup = function (options) {
 
     jQuery('.postcode_submit', maps_object.elem).click(function () {
         var val = jQuery('.postcode_input', maps_object.elem).val();
-        maps_object.postcodeLookup(val);
+        community_map.postcodeLookup(val, maps_object);
     });
     
     jQuery('.clear_postcode_search', this.elem).click(function () {
-        community_map.clearPostcodeLookup(options);
+        var val = jQuery('.postcode_input', maps_object.elem).val();
+        community_map.clearPostcodeLookup(val, maps_object);
     });
 
     jQuery('.postcode_input', this.elem).keyup('enterKey', function (e) {
@@ -222,7 +236,7 @@ community_map.renderPostcodeLookup = function (options) {
 
 community_map.clearPostcodeLookup = function (val, options) { 
     jQuery('.postcode_input', options.elem).val('');
-    options.map.setView([options.lat, options.lng], this.zoom);
+    options.map.setView([options.lat, options.lng], options.zoom);
     jQuery('.clear_postcode_search', options.elem).hide();
 }
 
