@@ -107,9 +107,11 @@ community_map.addFixedLayer = function (data, options) {
 };
 
 community_map.removeLayer = function (type_id, options) {
-    options.map.removeLayer(options.point_layers[type_id]);
-    options.point_layers[type_id] = null;
-    jQuery('.list_container .type_'+type_id, options.elem).remove();
+    if (options.point_layers[type_id]){ 
+        options.map.removeLayer(options.point_layers[type_id]);
+        options.point_layers[type_id] = null;
+        jQuery('.list_container .type_'+type_id, options.elem).remove();
+    }    
 };
 
 community_map.removeAllLayers = function (options) {
@@ -118,7 +120,7 @@ community_map.removeAllLayers = function (options) {
     
     for(var i=0; i<maps_object.types.length; i++) { 
         if(maps_object.types[i] !== 'undefined') {
-             
+
             community_map.removeLayer(i, maps_object);
         }
     };

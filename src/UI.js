@@ -100,9 +100,10 @@ community_map.renderDropDown = function(options) {
     //ensure there are no events stuck on this element
     jQuery('.type_selector', maps_object.elem).unbind();
     jQuery('.type_selector', maps_object.elem).change(function () {
-        maps_object.removeAllLayers();
+        
+        community_map.removeAllLayers(maps_object);
         var key = jQuery(this).val();
-        maps_object.addLayer(parseInt(key), maps_object);
+        community_map.addLayer(parseInt(key), maps_object);
     });
 }
 
