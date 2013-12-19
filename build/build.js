@@ -79,8 +79,10 @@ exports.build = function (compsBase32, buildName) {
 	console.log('Concatenating ' + files.length + ' files...');
 
 	var copy = fs.readFileSync('src/copyright.js', 'utf8'),
-	    intro = '(function (window, document, undefined) {',
-	    outro = '}(window, document));',
+	    // intro = '(function (window, document, undefined) {',
+	    // outro = '}(window, document));',
+        intro = "jQuery(document).ready(function () {(function (window, document, undefined) {";
+        outro = "}(window, document));L.Icon.Default.imagePath = 'images';jQuery('.lambeth_map').community_map();});";
 	    newSrc = copy + intro + combineFiles(files) + outro,
 	    
 	    //not sure how the buildname business works 
