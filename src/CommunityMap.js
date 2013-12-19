@@ -23,11 +23,21 @@ window.community_map = {};
             this.options.searchType     = this.element.attr('data-map-search-type'),
             this.options.elem           = this.element;
             
+            //outline style is for the boundry around the local area,if you are using it... 
+            this.options.outline_style = {
+                "color": "#004a86",
+                fillColor: "#fff",
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.3
+            };
+            
             community_map.drawMap(this.options);
         }
     });
     
 }(jQuery,window));
+
 
 
 

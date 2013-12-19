@@ -3,7 +3,9 @@
 community_map.addListItem = function (feature, options) {
      
     var html = "<div class='list_item type_" + feature.properties.type_id + "'>";
-        html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
+        if(feature.properties.uri_rendered) {
+            html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
+        }
         if (feature.properties.nothing_rendered) {
             html += feature.properties.nothing_rendered;
         } else {
@@ -25,7 +27,8 @@ community_map.addLayer = function (type_id, options) {
         maps_object.point_layers[type_id] = L.geoJson(maps_object.data, {
             onEachFeature: function (feature, layer) { //layer here refering to leaflets internal concept of layer        
                 
-                if(layer.setIcon && maps_object.types[feature.properties.type_id].icon) {
+                if (maps_object.types[feature.properties.type_id].icon) {
+                    
                     var icon = layer.setIcon(maps_object.types[feature.properties.type_id].icon);
                     layer.options.title = feature.properties.name.replace(/(<([^>]+)>)/ig, "");
                     layer.options.alt = feature.properties.name.replace(/(<([^>]+)>)/ig, "");
@@ -70,7 +73,9 @@ community_map.addAllListItems = function (options) {
 };
 
 community_map.addFixedLayer = function (data, options) {
-
+    
+    console.log('adding fixed layer');
+    
     options.fixed_layer_data = data;
     
     var maps_object = options;
@@ -100,9 +105,7 @@ community_map.addFixedLayer = function (data, options) {
     var img_url = maps_object.fixed_layer_data.features[0].properties.uri_rendered;
     
     var html = "<div class='key_item' ><img src='" + img_url + "' /><p>" + maps_object.fixed_layer_data.features[0].properties.name.replace(/(<([^>]+)>)/ig, "") + "</p></div>";
-   
-   
-   
+       
     jQuery('.fixed_layer_key', maps_object.elem).append(html);
 };
 
@@ -120,7 +123,6 @@ community_map.removeAllLayers = function (options) {
     
     for(var i=0; i<maps_object.types.length; i++) { 
         if(maps_object.types[i] !== 'undefined') {
-
             community_map.removeLayer(i, maps_object);
         }
     };
@@ -138,6 +140,7 @@ community_map.hereIAmMarker = function (lat, lon, options) {
         maps_object.map.removeLayer(maps_object.hereMarker);
     } 
     
+    //TODO: make this URL customisable! 
     var hereIcon = new L.icon({
         iconUrl: '/sites/all/modules/custom/lambeth_interactive_map/img/here_i_am.png'
     });
@@ -147,24 +150,16 @@ community_map.hereIAmMarker = function (lat, lon, options) {
     }).addTo(maps_object.map);
 };
 
-community_map.renderOutline = function () {
-
-    var maps_object = this;
-
-    //style the outline - may want to customise this
-    this.outline_style = {
-        "color": "#004a86",
-        fillColor: "#fff",
-        weight: 3,
-        opacity: 1,
-        fillOpacity: 0.3
-    };
-
-    //draws the outline of lambeth
-    jQuery.getJSON(this.outline_url, function (data) {
-        maps_object.outline = data;
-        L.geoJson(maps_object.outline, {
-            style: maps_object.outline_style
-        }).addTo(maps_object.map);
-    });
+community_map.renderOutline = function (data, options) {
+    
+    console.log('WAS THIS CALLED?');
+    /*
+    maps_object = options;
+    maps_object.outline = data;
+    console.log(maps_object.outline);
+    
+    L.geoJson(maps_object.outline, {
+        style: options.outline_style
+    }).addTo(options.map);
+    */
 };

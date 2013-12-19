@@ -2,13 +2,21 @@ community_map.getJSON = function (url, options, callback) {
     
     var options = options;
 
+    this.callback = callback; 
+    
+    console.log(url);
+    
     jQuery.getJSON(url + "?callback=?", function (geoJsonObject) {
-
-        geoJsonObject.features = geoJsonObject.features.filter(function (n) {
-            return n //filters out any null values
-        });
+        console.log(geoJsonObject);
         
-        callback.call(this, geoJsonObject, options);
+        //filters out any null features, which can cause problems down the line
+        if(geoJsonObject.features) {
+            geoJsonObject.features = geoJsonObject.features.filter(function (n) {
+                return n 
+            });
+        }
+        
+        callback(geoJsonObject, options);
     });
 }
 

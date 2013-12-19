@@ -44,11 +44,11 @@ community_map.drawMap = function (options) {
     //using the cloudmade tiles
     L.tileLayer('http://{s}.tile.cloudmade.com/e7b61e61295a44a5b319ca0bd3150890/997/256/{z}/{x}/{y}.png').addTo(options.map);
 
-    //show the boundry of lambeth
-    community_map.renderOutline(options);
-
+    //show the boundry of the community area 
+    community_map.getJSON(options.outline_url, options, community_map.renderOutline);
+    
     //get the json and then call the discover types function on it
-    community_map.getJSON(options.url, options, community_map.discoverTypes);
+    //community_map.getJSON(options.url, options, community_map.discoverTypes);
 
     if(options.fixed_layer_url) {
         community_map.getJSON(options.fixed_layer_url, options, community_map.addFixedLayer);
@@ -71,8 +71,7 @@ community_map.changeViewEvents = function (options) {
     jQuery('.list_view_tab', options.elem).click(function () {
         
         if(jQuery('.list_container', maps_object.elem).text() == "") { 
-            community_map.addAllListItems(maps_object);
-            maps_object.nothing_selected_condition = true; 
+            jQuery('.list_container', maps_object.elem).html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
         }
         
         jQuery('.list_container', options.elem).show();
@@ -100,7 +99,6 @@ community_map.renderDropDown = function(options) {
     //ensure there are no events stuck on this element
     jQuery('.type_selector', maps_object.elem).unbind();
     jQuery('.type_selector', maps_object.elem).change(function () {
-        
         community_map.removeAllLayers(maps_object);
         var key = jQuery(this).val();
         community_map.addLayer(parseInt(key), maps_object);
@@ -166,12 +164,6 @@ community_map.renderKey = function (options) {
     
     jQuery('.individual_layer input', maps_object.elem).change(function () {
         
-        //Get out of the state where everything is visible in the text view because nothing has been selected 
-        if (maps_object.nothing_selected_condition) { 
-            jQuery('.list_container', maps_object.elem).empty();
-            maps_object.nothing_selected_condition = false;
-        }
-        
         //remove 'all layers' checkbox if it's selected  
         jQuery('.all_values input', maps_object.elem).removeAttr('checked');
         
@@ -187,13 +179,7 @@ community_map.renderKey = function (options) {
     jQuery('.all_values input', maps_object.elem).unbind();
     
     jQuery('.all_values input', maps_object.elem).change(function() {
-        
-        //Get out of the state where everything is visible in the text view because nothing has been selected 
-        if (maps_object.nothing_selected_condition) { 
-            jQuery('.list_container', maps_object.elem).empty();
-            maps_object.nothing_selected_condition = false;
-        }
-        
+                
         //remove all checkboxes on the other inputs 
         jQuery('.individual_layer input', maps_object.elem).removeAttr('checked');
         
