@@ -1,23 +1,40 @@
 community_map.getJSON = function (url, options, callback) {
     
-    var options = options;
+    // var options = options;
 
-    this.callback = callback; 
-    
-    console.log(url);
-    
-    jQuery.getJSON(url + "?callback=?", function (geoJsonObject) {
-        console.log(geoJsonObject);
-        
-        //filters out any null features, which can cause problems down the line
-        if(geoJsonObject.features) {
+    // this.callback = callback; 
+    console.log("callback = " + callback);
+    console.log("options = " + options);
+    console.log("url = " + url);
+
+    // Create a closure by referencing callback and options in getJSON scope
+    var successCallback = function (geoJsonObject) {
+        console.log("geoJsonObject = " + geoJsonObject);
+
+        // filters out any null features, which can cause problems down the line
+        if (geoJsonObject.features) {
             geoJsonObject.features = geoJsonObject.features.filter(function (n) {
-                return n 
+                return n;
             });
         }
-        
+
         callback(geoJsonObject, options);
-    });
+    };
+
+    jQuery.getJSON(url, successCallback);
+
+    // jQuery.getJSON(url + "?callback=?", function (geoJsonObject) {
+    //     console.log(geoJsonObject);
+        
+    //     //filters out any null features, which can cause problems down the line
+    //     if(geoJsonObject.features) {
+    //         geoJsonObject.features = geoJsonObject.features.filter(function (n) {
+    //             return n;
+    //         });
+    //     }
+        
+    //     callback(geoJsonObject, options);
+    // });
 }
 
 

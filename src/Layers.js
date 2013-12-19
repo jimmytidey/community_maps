@@ -152,8 +152,6 @@ community_map.hereIAmMarker = function (lat, lon, options) {
 
 community_map.renderOutline = function (data, options) {
     
-    console.log('WAS THIS CALLED?');
-    /*
     maps_object = options;
     maps_object.outline = data;
     console.log(maps_object.outline);
@@ -161,5 +159,4 @@ community_map.renderOutline = function (data, options) {
     L.geoJson(maps_object.outline, {
         style: options.outline_style
     }).addTo(options.map);
-    */
 };
