@@ -44,7 +44,7 @@ community_map.drawMap = function (options) {
     //using the cloudmade tiles
     L.tileLayer('http://{s}.tile.cloudmade.com/e7b61e61295a44a5b319ca0bd3150890/997/256/{z}/{x}/{y}.png').addTo(options.map);
 
-    //show the boundry of the community area 
+    //show the boundry of the community area
     community_map.getJSON(options.outline_url, options, community_map.renderOutline);
     
     //get the json and then call the discover types function on it
@@ -66,6 +66,8 @@ community_map.changeViewEvents = function (options) {
                 
         jQuery('.list_container', options.elem).hide();
         jQuery('.list_view_tab', options.elem).removeClass('selected_tab');
+        
+        jQuery('.postcode_input', options.elem).attr('disabled', false);
     });
 
     jQuery('.list_view_tab', options.elem).click(function () {
@@ -79,6 +81,8 @@ community_map.changeViewEvents = function (options) {
         
         jQuery('.leaflet_container', options.elem).hide();
         jQuery('.map_view_tab', options.elem).removeClass('selected_tab');
+        
+        jQuery('.postcode_input', options.elem).attr('disabled', true);
     });
 };
 
@@ -150,8 +154,7 @@ community_map.renderKey = function (options) {
             html += "<div class='key_divider clearfix'></div></div>";
             html += "<p class='only_show_label'>Only show: </p>";
         jQuery('.key', maps_object.elem).prepend(html);
-    } 
-    
+    }
 
     //make the first set selected 
     if(maps_object.types.length == 1) {
@@ -164,11 +167,16 @@ community_map.renderKey = function (options) {
     
     jQuery('.individual_layer input', maps_object.elem).change(function () {
         
+        
+        
         //remove 'all layers' checkbox if it's selected  
-        jQuery('.all_values input', maps_object.elem).removeAttr('checked');
+        if(jQuery('.all_values input', maps_object.elem).prop('checked')) { 
+            jQuery('.all_values input', maps_object.elem).removeAttr('checked');
+            community_map.removeAllLayers(maps_object);
+        }
         
         var key = jQuery(this).val();
-
+        
         if(jQuery(this).is(':checked')) {
             community_map.addLayer(parseInt(key),maps_object);
         } else {
@@ -225,6 +233,7 @@ community_map.clearPostcodeLookup = function (val, options) {
     jQuery('.postcode_input', options.elem).val('');
     options.map.setView([options.lat, options.lng], options.zoom);
     jQuery('.clear_postcode_search', options.elem).hide();
+    community_map.removeHereIAmMarker(options)
 }
 
 

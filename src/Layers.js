@@ -142,13 +142,23 @@ community_map.hereIAmMarker = function (lat, lon, options) {
     
     //TODO: make this URL customisable! 
     var hereIcon = new L.icon({
-        iconUrl: '/sites/all/modules/custom/lambeth_interactive_map/img/here_i_am.png'
+        iconUrl: 'http://lambeth.coop/sites/all/modules/custom/lambeth_interactive_map/img/here_i_am.png',
+        iconSize: [39, 50],
+        iconAnchor: [19, 50],
+        popupAnchor: [0, -50]        
     });
     
     maps_object.hereMarker = L.marker([lat, lon], {
         icon: hereIcon
     }).addTo(maps_object.map);
 };
+
+community_map.removeHereIAmMarker = function (options) {
+    console.log('removing here I am marker');
+    
+    options.map.removeLayer(options.hereMarker);
+    options.hereMarker = null; 
+}
 
 community_map.renderOutline = function (data, options) {
     
