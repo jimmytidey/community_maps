@@ -48,7 +48,7 @@ community_map.drawMap = function (options) {
     community_map.getJSON(options.outline_url, options, community_map.renderOutline);
     
     //get the json and then call the discover types function on it
-    //community_map.getJSON(options.url, options, community_map.discoverTypes);
+    community_map.getJSON(options.url, options, community_map.discoverTypes);
 
     if(options.fixed_layer_url) {
         community_map.getJSON(options.fixed_layer_url, options, community_map.addFixedLayer);

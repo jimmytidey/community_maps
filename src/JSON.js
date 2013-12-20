@@ -1,40 +1,23 @@
 community_map.getJSON = function (url, options, callback) {
+        
+    if(!community_map.sameOrigin(url)) { 
+        url = url + "?callback=?";
+    } 
     
-    // var options = options;
-
-    // this.callback = callback; 
-    console.log("callback = %O", callback);
-    console.log("options = %O", options);
-    console.log("url = %O", url);
-
     // Create a closure by referencing callback and options in getJSON scope
     var successCallback = function (geoJsonObject) {
-        console.log("geoJsonObject = %O", geoJsonObject);
-
+        
+        console.log("retrived geojson object ");
         // filters out any null features, which can cause problems down the line
         if (geoJsonObject.features) {
             geoJsonObject.features = geoJsonObject.features.filter(function (n) {
                 return n;
             });
         }
-
         callback(geoJsonObject, options);
     };
-
+    
     jQuery.getJSON(url, successCallback);
-
-    // jQuery.getJSON(url + "?callback=?", function (geoJsonObject) {
-    //     console.log(geoJsonObject);
-        
-    //     //filters out any null features, which can cause problems down the line
-    //     if(geoJsonObject.features) {
-    //         geoJsonObject.features = geoJsonObject.features.filter(function (n) {
-    //             return n;
-    //         });
-    //     }
-        
-    //     callback(geoJsonObject, options);
-    // });
 }
 
 
@@ -102,8 +85,10 @@ community_map.discoverTypes = function (geoJsonObject, options) {
     } else if(options.searchType == 'auto-suggest') {
         community_map.renderAutoSuggest(options);
     } else if(options.searchType == 'key') {
+        console.log('rendering key');
         community_map.renderKey(options);
     }
+    
 }
 
 

@@ -32,6 +32,7 @@ window.community_map = {};
                 fillOpacity: 0.3
             };
             
+            console.log(this.options);
             community_map.drawMap(this.options);
         }
     });
@@ -100,3 +101,11 @@ community_map.addPlaceholder = function () {
         });
     }
 }   
+
+
+community_map.sameOrigin = function(url){
+    var link = document.createElement("a");
+    link.href = url;
+
+    return ((link.protocol + link.host) === window.location.protocol + window.location.host);
+}
