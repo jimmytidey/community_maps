@@ -106,6 +106,7 @@ community_map.renderDropDown = function(options) {
         community_map.removeAllLayers(maps_object);
         var key = jQuery(this).val();
         community_map.addLayer(parseInt(key), maps_object);
+        community_map.sortListItems();
     });
 }
 
@@ -123,10 +124,12 @@ community_map.renderAutoSuggest = function (options) {
         change: function (event, ui) {
             layer_id = ui.item.key; //dunno if this will work 
             maps_object.addLayer(layer_id);
+            community_map.sortListItems();
         },
         select: function (event, ui) {
             layer_id = ui.item.key; //dunno if this will work 
             maps_object.addLayer(layer_id);
+            community_map.sortListItems();
         }
     });
 }
@@ -160,6 +163,7 @@ community_map.renderKey = function (options) {
     if(maps_object.types.length == 1) {
         community_map.addLayer(0, maps_object);
         jQuery('.key_item input:first', maps_object.elem).attr('checked', 'checked');
+        community_map.sortListItems();
     }
 
     //ensure there are no events stuck on this element
@@ -179,6 +183,7 @@ community_map.renderKey = function (options) {
         
         if(jQuery(this).is(':checked')) {
             community_map.addLayer(parseInt(key),maps_object);
+            community_map.sortListItems();
         } else {
             community_map.removeLayer(parseInt(key),maps_object);
         }
@@ -193,6 +198,7 @@ community_map.renderKey = function (options) {
         
         if(jQuery(this).is(':checked')) {
             community_map.addAllLayers(maps_object);
+            community_map.sortListItems();
         } else {
             community_map.removeAllLayers(maps_object);
         }

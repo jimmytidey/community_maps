@@ -21,6 +21,13 @@ community_map.addLayer = function (type_id, options) {
     
     var maps_object = options;
 
+    // test to see if list_view_empty_warning exists and remove it if it does
+    var warning = jQuery('.list_view_empty_warning');
+
+    if (warning) {
+        warning.remove();
+    }
+
     //test to ensure this layer isn't already added 
     if (!maps_object.point_layers[type_id]) {
          
@@ -72,6 +79,24 @@ community_map.addAllListItems = function (options) {
     }
 };
 
+// Sort the items in the list_container by alphabetical order
+community_map.sortListItems = function () {
+    var listContainer = jQuery('.list_container');
+
+    var sortedItems = listContainer.children().sort(function (a, b) {
+        var upA = jQuery('.map-pin-title > a', a).text().toUpperCase();
+        var upB = jQuery('.map-pin-title > a', b).text().toUpperCase();
+        
+        // console.log("%s < %s ? %s", upB, upA, (upB<upA));
+        return (upB > upA) ? -1 : (upB < upA) ? 1 : 0;
+    });
+
+    console.log('Sorting %d items...', listContainer.children().length);
+
+    listContainer.empty();
+    listContainer.append(sortedItems);
+};
+
 community_map.addFixedLayer = function (data, options) {
     
     console.log('adding fixed layer');
@@ -114,7 +139,14 @@ community_map.removeLayer = function (type_id, options) {
         options.map.removeLayer(options.point_layers[type_id]);
         options.point_layers[type_id] = null;
         jQuery('.list_container .type_'+type_id, options.elem).remove();
-    }    
+    }
+
+    // Add the list_view_empty_warning if .list_container is now empty
+    var listContainer = jQuery('.list_container');
+
+    if (listContainer.children().length === 0) {
+        listContainer.html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
+    }
 };
 
 community_map.removeAllLayers = function (options) {
@@ -128,6 +160,9 @@ community_map.removeAllLayers = function (options) {
     };
 
     jQuery('.list_container', maps_object.elem).empty();
+
+    // Add the list_view_empty warning
+    jQuery('.list_container').html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
 };
 
 
