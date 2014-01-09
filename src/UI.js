@@ -60,29 +60,29 @@ community_map.changeViewEvents = function (options) {
     
      var maps_object = options;
     
-    jQuery('.map_view_tab', options.elem).click(function () {
-        jQuery('.leaflet_container', options.elem).show();
-        jQuery('.map_view_tab', options.elem).addClass('selected_tab');
+    jQuery('.map_view_tab', maps_object.elem).click(function () {
+        jQuery('.leaflet_container', maps_object.elem).show();
+        jQuery('.map_view_tab', maps_object.elem).addClass('selected_tab');
                 
-        jQuery('.list_container', options.elem).hide();
-        jQuery('.list_view_tab', options.elem).removeClass('selected_tab');
+        jQuery('.list_container', maps_object.elem).hide();
+        jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
         
-        jQuery('.postcode_input', options.elem).attr('disabled', false);
+        jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
     });
 
-    jQuery('.list_view_tab', options.elem).click(function () {
+    jQuery('.list_view_tab', maps_object.elem).click(function () {
         
         if(jQuery('.list_container', maps_object.elem).text() == "") { 
             jQuery('.list_container', maps_object.elem).html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
         }
         
-        jQuery('.list_container', options.elem).show();
-        jQuery('.list_view_tab', options.elem).addClass('selected_tab');
+        jQuery('.list_container', maps_object.elem).show();
+        jQuery('.list_view_tab', maps_object.elem).addClass('selected_tab');
         
-        jQuery('.leaflet_container', options.elem).hide();
-        jQuery('.map_view_tab', options.elem).removeClass('selected_tab');
+        jQuery('.leaflet_container', maps_object.elem).hide();
+        jQuery('.map_view_tab', maps_object.elem).removeClass('selected_tab');
         
-        jQuery('.postcode_input', options.elem).attr('disabled', true);
+        jQuery('.postcode_input', maps_object.elem).attr('disabled', true);
     });
 };
 
@@ -106,7 +106,7 @@ community_map.renderDropDown = function(options) {
         community_map.removeAllLayers(maps_object);
         var key = jQuery(this).val();
         community_map.addLayer(parseInt(key), maps_object);
-        community_map.sortListItems();
+        community_map.sortListItems(maps_object);
     });
 }
 
@@ -124,12 +124,12 @@ community_map.renderAutoSuggest = function (options) {
         change: function (event, ui) {
             layer_id = ui.item.key; //dunno if this will work 
             maps_object.addLayer(layer_id);
-            community_map.sortListItems();
+            community_map.sortListItems(maps_object);
         },
         select: function (event, ui) {
             layer_id = ui.item.key; //dunno if this will work 
             maps_object.addLayer(layer_id);
-            community_map.sortListItems();
+            community_map.sortListItems(maps_object);
         }
     });
 }
@@ -163,7 +163,7 @@ community_map.renderKey = function (options) {
     if(maps_object.types.length == 1) {
         community_map.addLayer(0, maps_object);
         jQuery('.key_item input:first', maps_object.elem).attr('checked', 'checked');
-        community_map.sortListItems();
+        community_map.sortListItems(maps_object);
     }
 
     //ensure there are no events stuck on this element
@@ -183,7 +183,7 @@ community_map.renderKey = function (options) {
         
         if(jQuery(this).is(':checked')) {
             community_map.addLayer(parseInt(key),maps_object);
-            community_map.sortListItems();
+            community_map.sortListItems(maps_object);
         } else {
             community_map.removeLayer(parseInt(key),maps_object);
         }
@@ -198,7 +198,7 @@ community_map.renderKey = function (options) {
         
         if(jQuery(this).is(':checked')) {
             community_map.addAllLayers(maps_object);
-            community_map.sortListItems();
+            community_map.sortListItems(maps_object);
         } else {
             community_map.removeAllLayers(maps_object);
         }

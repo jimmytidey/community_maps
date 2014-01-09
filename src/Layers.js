@@ -2,6 +2,8 @@
 
 community_map.addListItem = function (feature, options) {
      
+    var maps_object = options;
+
     var html = "<div class='list_item type_" + feature.properties.type_id + "'>";
         if(feature.properties.uri_rendered) {
             html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
@@ -14,7 +16,7 @@ community_map.addListItem = function (feature, options) {
         
     html+= "<br class='clearfix'/></div >";  
     
-    jQuery('.list_container', options.elem).append(html);
+    jQuery('.list_container', maps_object.elem).append(html);
 }
 
 community_map.addLayer = function (type_id, options) {
@@ -22,7 +24,7 @@ community_map.addLayer = function (type_id, options) {
     var maps_object = options;
 
     // test to see if list_view_empty_warning exists and remove it if it does
-    var warning = jQuery('.list_view_empty_warning');
+    var warning = jQuery('.list_view_empty_warning', maps_object.elem);
 
     if (warning) {
         warning.remove();
@@ -80,8 +82,11 @@ community_map.addAllListItems = function (options) {
 };
 
 // Sort the items in the list_container by alphabetical order
-community_map.sortListItems = function () {
-    var listContainer = jQuery('.list_container');
+community_map.sortListItems = function (options) {
+
+    var maps_object = options;
+    
+    var listContainer = jQuery('.list_container', maps_object.elem);
 
     var sortedItems = listContainer.children().sort(function (a, b) {
         var upA = jQuery('.map-pin-title > a', a).text().toUpperCase();
@@ -135,14 +140,16 @@ community_map.addFixedLayer = function (data, options) {
 };
 
 community_map.removeLayer = function (type_id, options) {
+    var maps_object = options;
+
     if (options.point_layers[type_id]){ 
         options.map.removeLayer(options.point_layers[type_id]);
         options.point_layers[type_id] = null;
-        jQuery('.list_container .type_'+type_id, options.elem).remove();
+        jQuery('.list_container .type_'+type_id, maps_object.elem).remove();
     }
 
     // Add the list_view_empty_warning if .list_container is now empty
-    var listContainer = jQuery('.list_container');
+    var listContainer = jQuery('.list_container', maps_object.elem);
 
     if (listContainer.children().length === 0) {
         listContainer.html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
@@ -162,7 +169,7 @@ community_map.removeAllLayers = function (options) {
     jQuery('.list_container', maps_object.elem).empty();
 
     // Add the list_view_empty warning
-    jQuery('.list_container').html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
+    jQuery('.list_container', maps_object.elem).html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
 };
 
 
