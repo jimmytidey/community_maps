@@ -20,12 +20,16 @@ community_map.drawMap = function (options) {
     jQuery('.outside_container', options.elem).append("<div class='display_container'></div>");
 
     //add list and maps into the container
-    var html = "<div class='view_tabs' > <a  class='map_view_tab selected_tab' >Map View</a>  <a class='list_view_tab' >Text View</a> </div>";
-        html += '<div class="list_container"></div>';
-        html += '<div class="leaflet_container"></div>';
+    var html = "<div class='view_tabs' > <a  class='map_view_tab selected_tab' >Map View</a>  <a class='list_view_tab' >Text View</a> </div>";    
+    html += '<div class="list_container"></div>';
+    html += '<div class="leaflet_container"></div>';
     jQuery(".display_container", options.elem).append(html);
 
     community_map.changeViewEvents(options);
+
+    if (options.defaultView === "list") {
+        jQuery('.list_view_tab', options.elem).click();
+    }
 
     //Render postcode search if necessary 
     if(options.postcode_search === 'true') {
@@ -62,7 +66,7 @@ community_map.drawMap = function (options) {
 
 community_map.changeViewEvents = function (options) {
     
-     var maps_object = options;
+    var maps_object = options;
     
     jQuery('.map_view_tab', maps_object.elem).click(function () {
         jQuery('.leaflet_container', maps_object.elem).show();
@@ -150,7 +154,7 @@ community_map.renderKey = function (options) {
     jQuery.each(maps_object.types, function (key, value) {
         var img_url = value.icon_url;
         var html = "<div class='key_item individual_layer' >";
-            html += "<img src='" + img_url + "' /><label for='checkbox_" + value.name + "'>" + value.name + " (" + value.count  + ")</label><input  id='checkbox_" + value.name + "' type='checkbox' value='" + key + "' />";
+            html += "<img alt='' src='" + img_url + "' /><label for='checkbox_" + value.name + "'>" + value.name + " (" + value.count  + ")</label><input  id='checkbox_" + value.name + "' type='checkbox' value='" + key + "' />";
             html += "<div class='key_divider clearfix'></div></div>";
         jQuery('.key', maps_object.elem).append(html);
     });

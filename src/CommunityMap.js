@@ -21,7 +21,8 @@ window.community_map = {};
             this.options.lng            = parseFloat(this.options.centre[1]),
             this.options.postcode_search= this.element.attr('data-map-postcode-search'),
             this.options.searchType     = this.element.attr('data-map-search-type'),
-            this.options.elem           = this.element;
+            this.options.elem           = this.element,
+            this.options.defaultView    = community_map.defaultMapView();
             
             //outline style is for the boundry around the local area,if you are using it... 
             this.options.outline_style = {
@@ -38,8 +39,6 @@ window.community_map = {};
     });
     
 }(jQuery,window));
-
-
 
 
 //UTILITY FUNCTIONS 
@@ -109,3 +108,27 @@ community_map.sameOrigin = function(url){
 
     return ((link.protocol + link.host) === window.location.protocol + window.location.host);
 }
+
+community_map.defaultMapView = function () {
+
+    // Looks in window url for argument 'mapView=list'. 
+    // If found, returns 'list', else returns 'map'.
+    var currentLocation = window.location.search;
+
+    if (!currentLocation) {
+        return "map";
+    }
+    
+    var argArray = currentLocation.split("?")[1].split("&");
+
+    for (var i = 0, arrayLength = argArray.length; i < arrayLength; i += 1) {
+
+        var argPair = argArray[i].split('=');
+        if (argPair[0] === "mapView" && argPair[1] === "list") {
+            return "list";
+        }
+    }
+
+    return "map";
+}
+    
