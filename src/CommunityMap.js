@@ -100,7 +100,7 @@ community_map.addPlaceholder = function () {
             })
         });
     }
-}   
+}
 
 
 community_map.sameOrigin = function(url){

@@ -1,12 +1,11 @@
 community_map.getJSON = function (url, options, callback) {
         
-    if(!community_map.sameOrigin(url)) { 
+    if(!community_map.sameOrigin(url)) {
         url = url + "?callback=?";
-    } 
-    
-    // Create a closure by referencing callback and options in getJSON scope
+    }
+
     var successCallback = function (geoJsonObject) {
-        
+
         console.log("retrived geojson object ");
         // filters out any null features, which can cause problems down the line
         if (geoJsonObject.features) {
@@ -14,9 +13,13 @@ community_map.getJSON = function (url, options, callback) {
                 return n;
             });
         }
+
+        // Run callback function on geoJSONobject
+        console.log("Running callback function on geoJSONobject");
         callback(geoJsonObject, options);
     };
     
+    console.log("Running jQuery getJSON...");
     jQuery.getJSON(url, successCallback);
 }
 
@@ -24,6 +27,8 @@ community_map.getJSON = function (url, options, callback) {
 
 community_map.discoverTypes = function (geoJsonObject, options) {
     
+    console.log("Starting discoverTypes method...");
+
     //List every type of feature in the geo JSON
     options.data = geoJsonObject;
     
@@ -77,7 +82,15 @@ community_map.discoverTypes = function (geoJsonObject, options) {
     community_map.sortTypes(options);
 
     //add types to the data 
-    community_map.addTypesToFeatuers(options);
+    community_map.addTypesToFeatures(options);
+
+    // If spinner exists, remove it
+    console.log("Removing spinner");
+    var spinner = jQuery('.key_spinner', options.elem);
+
+    if (spinner) {
+        spinner.remove();
+    }
 
     //render the right UX
     if(options.searchType == 'drop-down') {
@@ -89,23 +102,24 @@ community_map.discoverTypes = function (geoJsonObject, options) {
         community_map.renderKey(options);
     }
     
+    console.log("Finishing discoverTypes method...");
 }
 
 
 
 
-community_map.addTypesToFeatuers = function (options) {
+community_map.addTypesToFeatures = function (options) {
 
     var options = options;
 
     jQuery.each(options.data.features, function (key, value) {
 
-        var type_index = null
+        var type_index = null;
 
         for(var i = 0; i < options.types.length; i++) {
             if(value.properties[options.filterField] == options.types[i].name) {
                 value.properties.type_id = i;
-                options.types[i].count ++; 
+                options.types[i].count ++;
             }
         }
     });
@@ -113,16 +127,16 @@ community_map.addTypesToFeatuers = function (options) {
 
 
 //this puts the types in alphabetical order... could check a flag in options and sort on a different basis
-community_map.sortTypes = function (options) { 
+community_map.sortTypes = function (options) {
     options.types.sort(function (a, b) {
         var nameA = a.name.toLowerCase(),
-            nameB = b.name.toLowerCase()
+            nameB = b.name.toLowerCase();
             if(nameA < nameB) { //sort string ascending
-                return -1
+                return -1;
             }
         if(nameA > nameB) {
-            return 1
+            return 1;
         }
-        return 0 //default return value (no sorting)
+        return 0; //default return value (no sorting)
     });
 }

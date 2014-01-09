@@ -46,7 +46,12 @@ community_map.drawMap = function (options) {
 
     //show the boundry of the community area
     community_map.getJSON(options.outline_url, options, community_map.renderOutline);
-    
+   
+    // Add a spinner until main geoJSON payload has transferred and rendered 
+    console.log("Adding spinner...");
+    var spinnerHtml = '<img class="key_spinner" src="img/loading.gif" />';
+    jQuery('.controls_container', options.elem).append(spinnerHtml);
+ 
     //get the json and then call the discover types function on it
     community_map.getJSON(options.url, options, community_map.discoverTypes);
 
@@ -174,7 +179,7 @@ community_map.renderKey = function (options) {
         
         
         //remove 'all layers' checkbox if it's selected  
-        if(jQuery('.all_values input', maps_object.elem).prop('checked')) { 
+        if(jQuery('.all_values input', maps_object.elem).prop('checked')) {
             jQuery('.all_values input', maps_object.elem).removeAttr('checked');
             community_map.removeAllLayers(maps_object);
         }
@@ -229,17 +234,17 @@ community_map.renderPostcodeLookup = function (options) {
     jQuery('.postcode_input', this.elem).keyup('enterKey', function (e) {
         if(e.keyCode === 13) {
             var val = jQuery('.postcode_input', maps_object.elem).val();
-            community_map.postcodeLookup(val, maps_object); 
+            community_map.postcodeLookup(val, maps_object);
         }
     });
 };
 
 
-community_map.clearPostcodeLookup = function (val, options) { 
+community_map.clearPostcodeLookup = function (val, options) {
     jQuery('.postcode_input', options.elem).val('');
     options.map.setView([options.lat, options.lng], options.zoom);
     jQuery('.clear_postcode_search', options.elem).hide();
-    community_map.removeHereIAmMarker(options)
+    community_map.removeHereIAmMarker(options);
 }
 
 

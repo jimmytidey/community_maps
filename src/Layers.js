@@ -11,10 +11,10 @@ community_map.addListItem = function (feature, options) {
         if (feature.properties.nothing_rendered) {
             html += feature.properties.nothing_rendered;
         } else {
-            html += feature.properties.name; 
+            html += feature.properties.name;
         }
         
-    html+= "<br class='clearfix'/></div >";  
+    html+= "<br class='clearfix'/></div >";
     
     jQuery('.list_container', maps_object.elem).append(html);
 }
@@ -46,7 +46,7 @@ community_map.addLayer = function (type_id, options) {
                 if (feature.properties.nothing_rendered) {
                     layer.bindPopup(feature.properties.nothing_rendered);
                 } else {
-                    layer.bindPopup(feature.properties.name); 
+                    layer.bindPopup(feature.properties.name);
                 }
             
                 //add list item 
@@ -76,8 +76,8 @@ community_map.addAllLayers = function (options) {
 //This is only required for the state where we want to add all the list items to the text views
 //because otherwise it will be empty
 community_map.addAllListItems = function (options) {
-    for(var i=0; i<options.data.features.length; i++) { 
-        community_map.addListItem(options.data.features[i], options); 
+    for(var i=0; i<options.data.features.length; i++) {
+        community_map.addListItem(options.data.features[i], options);
     }
 };
 
@@ -85,7 +85,7 @@ community_map.addAllListItems = function (options) {
 community_map.sortListItems = function (options) {
 
     var maps_object = options;
-    
+
     var listContainer = jQuery('.list_container', maps_object.elem);
 
     var sortedItems = listContainer.children().sort(function (a, b) {
@@ -122,7 +122,7 @@ community_map.addFixedLayer = function (data, options) {
             });
 
             if(feature.properties.uri_rendered) {
-                leaflet_layer.setIcon(icon);    
+                leaflet_layer.setIcon(icon);
                 leaflet_layer.options.alt = feature.properties.name.replace(/(<([^>]+)>)/ig, "");
             }
             
@@ -160,11 +160,11 @@ community_map.removeAllLayers = function (options) {
     
     var maps_object = options;
     
-    for(var i=0; i<maps_object.types.length; i++) { 
+    for(var i=0; i<maps_object.types.length; i++) {
         if(maps_object.types[i] !== 'undefined') {
             community_map.removeLayer(i, maps_object);
         }
-    };
+    }
 
     jQuery('.list_container', maps_object.elem).empty();
 
@@ -180,14 +180,14 @@ community_map.hereIAmMarker = function (lat, lon, options) {
     
     if(maps_object.hereMarker) { //remove icon if it's in the wrong place
         maps_object.map.removeLayer(maps_object.hereMarker);
-    } 
+    }
     
     //TODO: make this URL customisable! 
     var hereIcon = new L.icon({
         iconUrl: 'http://lambeth.coop/sites/all/modules/custom/lambeth_interactive_map/img/here_i_am.png',
         iconSize: [39, 50],
         iconAnchor: [19, 50],
-        popupAnchor: [0, -50]        
+        popupAnchor: [0, -50]
     });
     
     maps_object.hereMarker = L.marker([lat, lon], {
@@ -199,7 +199,7 @@ community_map.removeHereIAmMarker = function (options) {
     console.log('removing here I am marker');
     
     options.map.removeLayer(options.hereMarker);
-    options.hereMarker = null; 
+    options.hereMarker = null;
 }
 
 community_map.renderOutline = function (data, options) {
