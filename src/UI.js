@@ -49,7 +49,7 @@ community_map.drawMap = function (options) {
    
     // Add a spinner until main geoJSON payload has transferred and rendered 
     console.log("Adding spinner...");
-    var spinnerHtml = '<img class="key_spinner" src="img/loading.gif" />';
+    var spinnerHtml = '<img class="key_spinner" src="http://lambeth.coop/sites/all/modules/custom/lambeth_interactive_map/img/loading.gif" />';
     jQuery('.controls_container', options.elem).append(spinnerHtml);
  
     //get the json and then call the discover types function on it
