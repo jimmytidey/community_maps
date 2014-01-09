@@ -6,7 +6,6 @@ community_map.getJSON = function (url, options, callback) {
 
     var successCallback = function (geoJsonObject) {
 
-        console.log("retrived geojson object ");
         // filters out any null features, which can cause problems down the line
         if (geoJsonObject.features) {
             geoJsonObject.features = geoJsonObject.features.filter(function (n) {
@@ -15,11 +14,9 @@ community_map.getJSON = function (url, options, callback) {
         }
 
         // Run callback function on geoJSONobject
-        console.log("Running callback function on geoJSONobject");
         callback(geoJsonObject, options);
     };
     
-    console.log("Running jQuery getJSON...");
     jQuery.getJSON(url, successCallback);
 }
 
@@ -27,8 +24,6 @@ community_map.getJSON = function (url, options, callback) {
 
 community_map.discoverTypes = function (geoJsonObject, options) {
     
-    console.log("Starting discoverTypes method...");
-
     //List every type of feature in the geo JSON
     options.data = geoJsonObject;
     
@@ -85,7 +80,6 @@ community_map.discoverTypes = function (geoJsonObject, options) {
     community_map.addTypesToFeatures(options);
 
     // If spinner exists, remove it
-    console.log("Removing spinner");
     var spinner = jQuery('.key_spinner', options.elem);
 
     if (spinner) {
@@ -98,11 +92,9 @@ community_map.discoverTypes = function (geoJsonObject, options) {
     } else if(options.searchType == 'auto-suggest') {
         community_map.renderAutoSuggest(options);
     } else if(options.searchType == 'key') {
-        console.log('rendering key');
         community_map.renderKey(options);
     }
     
-    console.log("Finishing discoverTypes method...");
 }
 
 

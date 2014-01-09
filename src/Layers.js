@@ -88,11 +88,14 @@ community_map.sortListItems = function (options) {
 
     var listContainer = jQuery('.list_container', maps_object.elem);
 
+    // This is sorting .list_container > .list_item by the contents of the <a></a> tag.
+    // Potentially FRAGILE !!! Assuming that the title is the only thing with a hyperlink.
+    // In the dropdown lists, there is no wrapper class. :(
     var sortedItems = listContainer.children().sort(function (a, b) {
-        var upA = jQuery('.map-pin-title > a', a).text().toUpperCase();
-        var upB = jQuery('.map-pin-title > a', b).text().toUpperCase();
-        
-        // console.log("%s < %s ? %s", upB, upA, (upB<upA));
+        // var upA = jQuery('.map-pin-title > a', a).text().toUpperCase();
+        // var upB = jQuery('.map-pin-title > a', b).text().toUpperCase();
+        var upA = jQuery('a', a).text().toUpperCase();
+        var upB = jQuery('a', b).text().toUpperCase();
         return (upB > upA) ? -1 : (upB < upA) ? 1 : 0;
     });
 
@@ -103,8 +106,6 @@ community_map.sortListItems = function (options) {
 };
 
 community_map.addFixedLayer = function (data, options) {
-    
-    console.log('adding fixed layer');
     
     options.fixed_layer_data = data;
     
@@ -196,8 +197,6 @@ community_map.hereIAmMarker = function (lat, lon, options) {
 };
 
 community_map.removeHereIAmMarker = function (options) {
-    console.log('removing here I am marker');
-    
     options.map.removeLayer(options.hereMarker);
     options.hereMarker = null;
 }
@@ -206,7 +205,6 @@ community_map.renderOutline = function (data, options) {
     
     maps_object = options;
     maps_object.outline = data;
-    console.log(maps_object.outline);
     
     L.geoJson(maps_object.outline, {
         style: options.outline_style
