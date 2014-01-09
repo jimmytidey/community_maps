@@ -46,21 +46,42 @@ community_map.discoverTypes = function (geoJsonObject, options) {
             var type_name = value.properties[options.filterField];
             if(type_name !== '' && type_name !== null) {
 
+                var custom_icon,
+                    icon_url;     
+
                 //add new icon if one is available
                 if(value.properties.uri_rendered) {
 
-                    var custom_icon = L.icon({
+                    custom_icon = L.icon({
                         iconUrl: value.properties.uri_rendered,
                         Size: [32, 32],
                         iconAnchor: [16, 32],
                         popupAnchor: [0, -32]
                     });
 
-                    var icon_url = value.properties.uri_rendered;
+                    icon_url = value.properties.uri_rendered;
 
                 } else {
-                    icon = null;
-                    icon_url = null;
+                    // icon = null;
+                    // icon_url = null;
+
+                    // Leaflet gets the default icon from the location of the leaflet.js file.
+                    // In the recycling.html test in the repo where this JS is stored:
+                    // https://github.com/jimmytidey/community_maps
+                    // This is the leafletjs.com repo. 
+                    // 
+                    // In Drupal, something is borked.
+                    // So the hacky fix is to specify a custom icon for the default icon.
+                    // 
+                    // TODO:Find the root cause and fix it.
+                    custom_icon = L.icon({
+                        iconUrl: 'http://lambeth.coop/sites/default/files/pin_green.png',
+                        Size: [32, 32],
+                        iconAnchor: [16, 32],
+                        popupAnchor: [0, -32]
+                    });
+
+                    icon_url = 'http://lambeth.coop/sites/default/files/pin_green.png';
                 }
 
                 options.types.push({
