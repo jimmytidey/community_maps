@@ -29,10 +29,10 @@ community_map.postcodeLookup = function (postcode, options) {
     postcode = encodeURIComponent(postcode);
 
     var url = 'http://nominatim.openstreetmap.org/search?format=json&postalcode=' + postcode + '&country=United%20Kingdom&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
-    //TODO: remove DOM interactions from this method 
-    jQuery.getJSON(url, function (data) {
 
-        jQuery('loading_gif', maps_object.elem).remove();
+    var successCallback = function (data) {
+
+        jQuery('.loading_gif', maps_object.elem).remove();
         
         //show the clear search UX
         jQuery('.clear_postcode_search', maps_object.elem).show();
@@ -47,5 +47,7 @@ community_map.postcodeLookup = function (postcode, options) {
             maps_object.map.setView([data[0].lat, data[0].lon], 15);
             community_map.hereIAmMarker(data[0].lat, data[0].lon, maps_object);
         }
-    });
+    };
+
+    jQuery.getJSON(url, successCallback);
 };
