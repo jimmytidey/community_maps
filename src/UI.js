@@ -77,6 +77,9 @@ community_map.changeViewEvents = function (options) {
         jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
 
         jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
+
+        // Leaflet needs to measure container's size to work correctly
+        maps_object.map.invalidateSize();
     });
 
     // Bind keyboard event (enter) for button to select map view
