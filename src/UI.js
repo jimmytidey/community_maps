@@ -20,7 +20,7 @@ community_map.drawMap = function (options) {
     jQuery('.outside_container', options.elem).append("<div class='display_container'></div>");
 
     //add list and maps into the container
-    var html = "<div class='view_tabs' > <a  class='map_view_tab selected_tab' >Map View</a>  <a class='list_view_tab' >Text View</a> </div>";    
+    var html = "<div class='view_tabs' > <a class='map_view_tab selected_tab' tabindex='0' >Map View</a>  <a class='list_view_tab' tabindex='0'>Text View</a> </div>";
     html += '<div class="list_container"></div>';
     html += '<div class="leaflet_container"></div>';
     jQuery(".display_container", options.elem).append(html);
@@ -68,28 +68,66 @@ community_map.changeViewEvents = function (options) {
     
     var maps_object = options;
     
+    // Bind click event for button to select map view
     jQuery('.map_view_tab', maps_object.elem).click(function () {
         jQuery('.leaflet_container', maps_object.elem).show();
         jQuery('.map_view_tab', maps_object.elem).addClass('selected_tab');
-                
+
         jQuery('.list_container', maps_object.elem).hide();
         jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
-        
+
         jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
     });
 
+    // Bind keyboard event (enter) for button to select map view
+    jQuery('.map_view_tab', maps_object.elem).keypress(function (event) {
+
+        if (event.which !== 13) {
+            return;
+        }
+
+        jQuery('.leaflet_container', maps_object.elem).show();
+        jQuery('.map_view_tab', maps_object.elem).addClass('selected_tab');
+
+        jQuery('.list_container', maps_object.elem).hide();
+        jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
+
+        jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
+    });
+
+    // Bind click event for button to select list view
     jQuery('.list_view_tab', maps_object.elem).click(function () {
-        
-        if(jQuery('.list_container', maps_object.elem).text() == "") { 
+
+        if(jQuery('.list_container', maps_object.elem).text() === "") {
             jQuery('.list_container', maps_object.elem).html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
         }
-        
+
         jQuery('.list_container', maps_object.elem).show();
         jQuery('.list_view_tab', maps_object.elem).addClass('selected_tab');
-        
+
         jQuery('.leaflet_container', maps_object.elem).hide();
         jQuery('.map_view_tab', maps_object.elem).removeClass('selected_tab');
-        
+
+        jQuery('.postcode_input', maps_object.elem).attr('disabled', true);
+    });
+
+    // Bind keyboard event (enter) to select list view
+    jQuery('.list_view_tab', maps_object.elem).keypress(function (event) {
+
+        if (event.which !== 13) {
+            return;
+        }
+
+        if(jQuery('.list_container', maps_object.elem).text() === "") {
+            jQuery('.list_container', maps_object.elem).html("<p class='list_view_empty_warning' >You don't have any pins selected</p>");
+        }
+
+        jQuery('.list_container', maps_object.elem).show();
+        jQuery('.list_view_tab', maps_object.elem).addClass('selected_tab');
+
+        jQuery('.leaflet_container', maps_object.elem).hide();
+        jQuery('.map_view_tab', maps_object.elem).removeClass('selected_tab');
+
         jQuery('.postcode_input', maps_object.elem).attr('disabled', true);
     });
 };
