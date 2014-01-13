@@ -99,7 +99,7 @@ community_map.sortListItems = function (options) {
         return (upB > upA) ? -1 : (upB < upA) ? 1 : 0;
     });
 
-    console.log('Sorting %d items...', listContainer.children().length);
+    // console.log('Sorting %d items...', listContainer.children().length);
 
     listContainer.empty();
     listContainer.append(sortedItems);
