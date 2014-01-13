@@ -256,7 +256,7 @@ community_map.renderPostcodeLookup = function (options) {
 
     var maps_object = options;
 
-    var html = '<div class="postcode_lookup"><label for="map_search_by_location">Search by location: </label><input type="text" placeholder="postcode or address" class="postcode_input" id="map_search_by_location"  /><input type="button" class="postcode_submit" /><a class="clear_postcode_search">&raquo; Clear search</a></div>';
+    var html = '<div class="postcode_lookup"><label for="map_search_by_location">Search by location: </label><input type="text" placeholder="postcode or address" class="postcode_input" id="map_search_by_location"  /><input type="button" class="postcode_submit" alt="search map" /><a class="clear_postcode_search">&raquo; Clear search</a></div>';
 
     jQuery('.controls_container', maps_object.elem).append(html);
 
