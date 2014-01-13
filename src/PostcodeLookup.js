@@ -1,6 +1,12 @@
 
 community_map.postcodeLookup = function (postcode, options) {
 
+    // This code uses Nominatim from OpenStreetMaps to reverse geocode postcodes.
+    // API is here: http://wiki.openstreetmap.org/wiki/Nominatim
+    // Restrictions for use are here: http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy
+    //
+    // Should figure out if max bandwidth of 1 request/s is acceptable for Lambeth Coop.
+
     var maps_object = options;
 
     //remove any current warnings
@@ -22,12 +28,11 @@ community_map.postcodeLookup = function (postcode, options) {
     postcode = address_array.join(' ');
     postcode = encodeURIComponent(postcode);
 
-    var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + postcode + '&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
-
+    var url = 'http://nominatim.openstreetmap.org/search?format=json&postalcode=' + postcode + '&country=United%20Kingdom&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
     //TODO: remove DOM interactions from this method 
     jQuery.getJSON(url, function (data) {
 
-        jQuery('.loading_gif', maps_object.elem).remove();
+        jQuery('loading_gif', maps_object.elem).remove();
         
         //show the clear search UX
         jQuery('.clear_postcode_search', maps_object.elem).show();
