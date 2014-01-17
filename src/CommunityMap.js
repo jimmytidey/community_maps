@@ -33,7 +33,7 @@ window.community_map = {};
                 fillOpacity: 0.3
             };
             
-            console.log(this.options);
+            // console.log(this.options);
             community_map.drawMap(this.options);
         }
     });
