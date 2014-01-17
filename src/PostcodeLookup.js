@@ -28,7 +28,8 @@ community_map.postcodeLookup = function (postcode, options) {
     postcode = address_array.join(' ');
     postcode = encodeURIComponent(postcode);
 
-    var url = 'http://nominatim.openstreetmap.org/search?format=json&postalcode=' + postcode + '&country=United%20Kingdom&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
+    // OSM Nominatim reverse geocoding
+    var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + postcode + '&countrycodes=gb&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
 
     var successCallback = function (data) {
 
