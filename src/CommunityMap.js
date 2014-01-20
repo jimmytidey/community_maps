@@ -33,7 +33,6 @@ window.community_map = {};
                 fillOpacity: 0.3
             };
             
-            // console.log(this.options);
             community_map.drawMap(this.options);
         }
     });
@@ -72,7 +71,7 @@ community_map.htmlDecode = function (input) {
     var e = document.createElement('div');
     e.innerHTML = input;
     return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-}
+};
 
 community_map.addPlaceholder = function () {
     if(typeof Modernizr === 'undefined') {
@@ -96,18 +95,26 @@ community_map.addPlaceholder = function () {
                 if(input.val() == input.attr('placeholder')) {
                     input.val('');
                 }
-            })
+            });
         });
     }
-}
+};
 
 
 community_map.sameOrigin = function(url){
     var link = document.createElement("a");
     link.href = url;
 
+    // IE doesn't populate all link properties when setting .href with relative URL,
+    // but .href will return absolute URL which can be used on itself to populate
+    // these fields.
+    // http://stackoverflow.com/questions/736513/how-do-i-parse-a-url-into-hostname-and-path-in-javascript
+    if (link.host === "") {
+        link.href = link.href;
+    }
+
     return ((link.protocol + link.host) === window.location.protocol + window.location.host);
-}
+};
 
 community_map.defaultMapView = function () {
 
@@ -130,5 +137,5 @@ community_map.defaultMapView = function () {
     }
 
     return "map";
-}
+};
     

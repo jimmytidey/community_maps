@@ -159,7 +159,7 @@ community_map.renderDropDown = function(options) {
         community_map.addLayer(parseInt(key), maps_object);
         community_map.sortListItems(maps_object);
     });
-}
+};
 
 
 community_map.renderAutoSuggest = function (options) {
@@ -183,7 +183,7 @@ community_map.renderAutoSuggest = function (options) {
             community_map.sortListItems(maps_object);
         }
     });
-}
+};
 
 
 community_map.renderKey = function (options) {
@@ -254,7 +254,7 @@ community_map.renderKey = function (options) {
             community_map.removeAllLayers(maps_object);
         }
     });
-}
+};
 
 
 community_map.renderPostcodeLookup = function (options) {
@@ -291,7 +291,7 @@ community_map.clearPostcodeLookup = function (val, options) {
     options.map.setView([options.lat, options.lng], options.zoom);
     jQuery('.clear_postcode_search', options.elem).hide();
     community_map.removeHereIAmMarker(options);
-}
+};
 
 
 

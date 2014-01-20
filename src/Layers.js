@@ -17,7 +17,7 @@ community_map.addListItem = function (feature, options) {
     html+= "<br class='clearfix'/></div >";
     
     jQuery('.list_container', maps_object.elem).append(html);
-}
+};
 
 community_map.addLayer = function (type_id, options) {
     
@@ -60,14 +60,14 @@ community_map.addLayer = function (type_id, options) {
                 }
             }
         }).addTo(maps_object.map);
-    }    
+    }
 };
 
 
 
 community_map.addAllLayers = function (options) {
 
-    for(var i=0; i<options.types.length; i++) { 
+    for(var i=0; i<options.types.length; i++) {
        community_map.addLayer(i,options);
     }
 };
@@ -98,8 +98,6 @@ community_map.sortListItems = function (options) {
         var upB = jQuery('a', b).text().toUpperCase();
         return (upB > upA) ? -1 : (upB < upA) ? 1 : 0;
     });
-
-    // console.log('Sorting %d items...', listContainer.children().length);
 
     listContainer.empty();
     listContainer.append(sortedItems);
@@ -143,7 +141,7 @@ community_map.addFixedLayer = function (data, options) {
 community_map.removeLayer = function (type_id, options) {
     var maps_object = options;
 
-    if (options.point_layers[type_id]){ 
+    if (options.point_layers[type_id]){
         options.map.removeLayer(options.point_layers[type_id]);
         options.point_layers[type_id] = null;
         jQuery('.list_container .type_'+type_id, maps_object.elem).remove();
@@ -199,7 +197,7 @@ community_map.hereIAmMarker = function (lat, lon, options) {
 community_map.removeHereIAmMarker = function (options) {
     options.map.removeLayer(options.hereMarker);
     options.hereMarker = null;
-}
+};
 
 community_map.renderOutline = function (data, options) {
     

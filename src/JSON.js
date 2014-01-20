@@ -18,7 +18,7 @@ community_map.getJSON = function (url, options, callback) {
     };
     
     jQuery.getJSON(url, successCallback);
-}
+};
 
 
 
@@ -47,7 +47,7 @@ community_map.discoverTypes = function (geoJsonObject, options) {
             if(type_name !== '' && type_name !== null) {
 
                 var custom_icon,
-                    icon_url;     
+                    icon_url;
 
                 //add new icon if one is available
                 if(value.properties.uri_rendered) {
@@ -116,7 +116,7 @@ community_map.discoverTypes = function (geoJsonObject, options) {
         community_map.renderKey(options);
     }
     
-}
+};
 
 
 
@@ -136,7 +136,7 @@ community_map.addTypesToFeatures = function (options) {
             }
         }
     });
-}
+};
 
 
 //this puts the types in alphabetical order... could check a flag in options and sort on a different basis
@@ -152,4 +152,4 @@ community_map.sortTypes = function (options) {
         }
         return 0; //default return value (no sorting)
     });
-}
+};
