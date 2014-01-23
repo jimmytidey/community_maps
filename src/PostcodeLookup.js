@@ -12,7 +12,8 @@ community_map.postcodeLookup = function (postcode, options) {
     //remove any current warnings
     jQuery('.warning', maps_object.elem).remove();
    
-    
+    /* OLD CODE
+
     //specific to brixton !! 
     address_array = postcode.split(' ');
 
@@ -23,14 +24,38 @@ community_map.postcodeLookup = function (postcode, options) {
         }
     }
 
+    */
+
+    // Allow for postcodes entered without a space - works with all of London
+    var addressArray = postcode.split(' ');
+
+    // (1) Trim any trailing spaces
+    if (addressArray[addressArray.length - 1] === "") {
+        addressArray = addressArray.slice(0, addressArray.length - 1);
+    }
+
+    // (3) If postcode is not well formated, the reformat it.
+    //     UK postcodes have an inward code (last element) that is always 1 digit and 2 chars.
+    //     The remaining chars are the postcode
+    if (addressArray.length === 1) {
+        var outward,
+            inward,
+            firstElement = addressArray[0];
+
+        inward = firstElement.slice(-3);
+        outward = firstElement.slice(0, firstElement.length - 3);
+
+        addressArray = [outward, inward];
+    }
+
     jQuery('.postcode_lookup', maps_object.elem).append('<img src="/sites/all/modules/custom/lambeth_interactive_map/img/loading.gif" class="loading_gif" alt="loading" />');
 
-    postcode = address_array.join(' ');
+    postcode = addressArray.join(' ');
     postcode = encodeURIComponent(postcode);
 
     // OSM Nominatim reverse geocoding
-    var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + postcode + '&countrycodes=gb&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
-
+    // var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + postcode + '&countrycodes=gb&bounded=1&boundingbox="51.417986,51.507918,-0.078743,-0.15216"&json_callback=?';
+    var url = 'http://nominatim.openstreetmap.org/search/?q=' + postcode + ',london&countrycodes=gb&format=json&json_callback=?';
     var successCallback = function (data) {
 
         jQuery('.loading_gif', maps_object.elem).remove();
