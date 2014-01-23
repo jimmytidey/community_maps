@@ -6,7 +6,7 @@ community_map.addListItem = function (feature, options) {
 
     var html = "<div class='list_item type_" + feature.properties.type_id + "'>";
         if(feature.properties.uri_rendered) {
-            html+= "<img src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
+            html+= "<img alt='' src='" + feature.properties.uri_rendered + "' class='list_view_icon' />";
         }
         if (feature.properties.nothing_rendered) {
             html += feature.properties.nothing_rendered;
@@ -133,7 +133,7 @@ community_map.addFixedLayer = function (data, options) {
 
     var img_url = maps_object.fixed_layer_data.features[0].properties.uri_rendered;
     
-    var html = "<div class='key_item' ><img src='" + img_url + "' /><p>" + maps_object.fixed_layer_data.features[0].properties.name.replace(/(<([^>]+)>)/ig, "") + "</p></div>";
+    var html = "<div class='key_item' ><img alt='' src='" + img_url + "' /><p>" + maps_object.fixed_layer_data.features[0].properties.name.replace(/(<([^>]+)>)/ig, "") + "</p></div>";
        
     jQuery('.fixed_layer_key', maps_object.elem).append(html);
 };
