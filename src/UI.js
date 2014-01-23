@@ -27,10 +27,6 @@ community_map.drawMap = function (options) {
 
     community_map.changeViewEvents(options);
 
-    if (options.defaultView === "list") {
-        jQuery('.list_view_tab', options.elem).click();
-    }
-
     //Render postcode search if necessary 
     if(options.postcode_search === 'true') {
         community_map.renderPostcodeLookup(options);
@@ -62,6 +58,11 @@ community_map.drawMap = function (options) {
 
     if(options.fixed_layer_url) {
         community_map.getJSON(options.fixed_layer_url, options, community_map.addFixedLayer);
+    }
+
+    // Check to see if default view is set to list and change views
+    if (options.defaultView === "list") {
+        jQuery('.list_view_tab', options.elem).click();
     }
 };
 
