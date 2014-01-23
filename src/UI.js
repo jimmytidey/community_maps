@@ -254,6 +254,8 @@ community_map.renderKey = function (options) {
             community_map.removeAllLayers(maps_object);
         }
     });
+
+    jQuery('.all_values input', maps_object.elem).trigger('click');
 };
 
 
