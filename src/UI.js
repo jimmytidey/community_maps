@@ -79,6 +79,7 @@ community_map.changeViewEvents = function (options) {
         jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
 
         jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
+        jQuery('.postcode_lookup', maps_object.elem).show();
 
         // Leaflet needs to measure container's size to work correctly
         maps_object.map.invalidateSize();
@@ -98,6 +99,7 @@ community_map.changeViewEvents = function (options) {
         jQuery('.list_view_tab', maps_object.elem).removeClass('selected_tab');
 
         jQuery('.postcode_input', maps_object.elem).attr('disabled', false);
+        jQuery('.postcode_lookup', maps_object.elem).show();
     });
 
     // Bind click event for button to select list view
@@ -114,6 +116,7 @@ community_map.changeViewEvents = function (options) {
         jQuery('.map_view_tab', maps_object.elem).removeClass('selected_tab');
 
         jQuery('.postcode_input', maps_object.elem).attr('disabled', true);
+        jQuery('.postcode_lookup', maps_object.elem).hide();
     });
 
     // Bind keyboard event (enter) to select list view
@@ -134,6 +137,7 @@ community_map.changeViewEvents = function (options) {
         jQuery('.map_view_tab', maps_object.elem).removeClass('selected_tab');
 
         jQuery('.postcode_input', maps_object.elem).attr('disabled', true);
+        jQuery('.postcode_lookup', maps_object.elem).hide();
     });
 };
 
