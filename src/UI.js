@@ -211,7 +211,7 @@ community_map.renderKey = function (options) {
         var html = "<div class='key_item all_values' >";
             html += "<label for='checkbox_all'>All ("+ maps_object.data.features.length +")</label><input id='checkbox_all' type='checkbox' value='all' />";
             html += "<div class='key_divider clearfix'></div></div>";
-            html += "<p class='only_show_label'>Only show: </p>";
+            html += "<p class='only_show_label mobile-collapse'>Only show: </p>";
         jQuery('.key', maps_object.elem).prepend(html);
     }
 
